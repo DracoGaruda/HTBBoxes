@@ -119,6 +119,25 @@ ReachKart is an e-commerce website running on Ehtereum blockchain technology, to
 
 ### Section 4: Etherium Stolen
 
+- Start reviewing http traffic after the file download events
+- Reveiw traffic with HTTP/JSON file. Attacker with draws ether from 8 wallets. Showing methodology to detemine ether transfer for only the first wallet that attacker stole from
+- Follow tcp stream of the traffic after Reackkart.db Download. You will see follwoing information focus on marked values
+
+  ![q13](https://github.com/user-attachments/assets/61d4a266-a801-45b1-9d70-742ae18207ec)
+
+- transactionHash gives hash of the transaction. Block id is tracked in hash format.
+- In the same stream few requests ahead you will find following pointing value (value of ether transfer), Sender and recipient wallet Ids.
+
+  ![q15](https://github.com/user-attachments/assets/8ca6725b-5f73-4a5b-8e1f-e55a33e8691c)
+
+- Ether Value is in Hex. Convert it into decimal and divide by 10^8 to get the Ether value in Ether. Value: 0x1bc16d674ec80000(Hex) to 200000000(decimal) ~ 2.0 Ether
+- look into data of next 7  transactions and add them up to get toalt ether stolen
+- at the end of above transactions There is traffic request for user wallet currency query
+
+  ![q16](https://github.com/user-attachments/assets/4382143d-6e54-4680-8c1e-f8645fde3a6b)
+
+- Giving value of 0x1529f07e833d46000 - 24.40023 ether
+
 #### Task 12  
 **Question:** The attacker started sending Ether from all identified sellers' wallets. What is the hash of the first transaction?  
 **Answer:** `0x7b7ded2d51f0dcb1bf3fc5cc9598b81a7a622aac15d3841d377c548986e0a7c3`
@@ -139,6 +158,6 @@ ReachKart is an e-commerce website running on Ehtereum blockchain technology, to
 
 ###  Summary
 
-The attacker leveraged a **remote code execution vulnerability** (CVE-2024-28353) in the **TEW-827DRU router**, exploiting an HTTP parameter via POST requests. Through command injection (`usbapps.config.smb_admin_name`), they executed commands such as `whoami` and used `wget` to pull a reverse shell script, which ultimately connected to a **C2 server** at `35.159.25.253:41143`.
+ReachKart, an Ethereum-based e-commerce platform, suffered a targeted cyberattack due to misconfigurations in its mirrored production environment, which lacked anonymized data and proper access controls. The attacker exploited a path traversal vulnerability in the /user/getOrderBill endpoint to access critical files, including package.json, rk-logging.js, and rk-server.js, exposing the JWT signing key. Using this key, the attacker forged a token and accessed the admin panel. Sensitive files like reachkart.db were downloaded via WebSocket on port 8888, revealing 8 seller wallets. The attacker initiated Ethereum transactions, stealing a total of 24.4 ETH, beginning with the transaction hash 0x7b7ded...a7c3 and concluding in block 18. The final wallet balance recorded was 24.40023 ETH. The breach highlights the dangers of insecure development environments and poor secret management, emphasizing the need for strict input validation, secret rotation, isolated staging environments, and continuous monitoring to prevent similar exploits in blockchain-integrated applications.
 
 ---
