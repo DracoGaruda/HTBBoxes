@@ -25,15 +25,15 @@ The incident happened around 4:30 PM on Friday, "The Last day of the week" at th
 
 
 - As you can see from FTK imager the only User logged in is MrManj
-- You could also verify it by goign to Profilelsit registry key under System Hive
+- You could also verify it by going to Profilelsit registry key under System Hive
 
 ####  Task 2  
 **Question:** Employees should be trained not to leave their accounts unlocked. What is the username of the logged in user?  
 **Answer:** `MrManj`
 
 
-- THere are three true storege devices Toshiba, Kingston and unknown product.
-- Note attach and detach tiem stamps for Toshiba USB
+- THere are three true storage devices Toshiba, Kingston and unknown product.
+- Note attach and detach time stamps for Toshiba USB
   
   ![2](https://github.com/user-attachments/assets/feb475d5-9bce-4d21-8d2c-43bb9a5b0040)
   
@@ -53,10 +53,10 @@ The incident happened around 4:30 PM on Friday, "The Last day of the week" at th
 
 ### Shell folders
 
-- We found bunch of LNK files and Jump lists.
+- We found bunch of LNK files and Jump lists under recent folder.
 - Run Zimmerman tools LEcmd and JLECmd against LNK files nad Jumplist respectively.
-- Personally ran it on entire directory and saved it in a csv files
-- Note: When y0u review Mounted Devices Registry Key with USB Registry key. E: is toshiba Volume name
+- Personally ran it against entire directory and saved it in a csv files
+- Note: When you review and relate Mounted Devices Registry Key with USB Registry key. E: is Toshiba USB Volume name
 
   ![Lnk file](https://github.com/user-attachments/assets/fb0d9bc9-6a5c-4175-aa0e-6703a3ecdab1)
 
@@ -111,7 +111,7 @@ The incident happened around 4:30 PM on Friday, "The Last day of the week" at th
   ![usb](https://github.com/user-attachments/assets/af8eaf46-233a-47cb-9b44-c287e89a8ab5)
 
 #### Task 13  
-**Question:** I hope we can find some more evidence to tie this all together. What is Eddie's last name?  
+**Question:**  There was an unbranded USB in the USB list, can you identify it's manufacturer’s name?  
 **Answer:** `Shenzhen SanDiYiXin Electronic Co.,LTD`
 
 
