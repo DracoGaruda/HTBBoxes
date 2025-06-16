@@ -39,7 +39,7 @@ ReachKart is an e-commerce website running on Ehtereum blockchain technology, to
 
 - Express verison number is 4.21.2
 - Among the list Ethers,Web3 and hardhat are the only etherium related softwares where hardhat is used as Ethereum development environment and framework so Development smart network is hardhat:2.22.18
-- Now lets review rk-server.js and rk-logging.js. Do the similar and follow the TCP Stream and you will find follwoing in rk-logging.js
+- Now lets review rk-server.js and rk-logging.js. Do the similar and follow the TCP Stream and you will find following in rk-logging.js
 
    ![Q3-4_3](https://github.com/user-attachments/assets/8f98d09a-ce56-4818-bd04-bacea6e61b88)
 
@@ -121,7 +121,7 @@ ReachKart is an e-commerce website running on Ehtereum blockchain technology, to
 
 - Start reviewing http traffic after the file download events
 - Reveiw traffic with HTTP/JSON file. Attacker with draws ether from 8 wallets. Showing methodology to detemine ether transfer for only the first wallet that attacker stole from
-- Follow tcp stream of the traffic after Reackkart.db Download. You will see follwoing information focus on marked values
+- Follow tcp stream of the traffic after Reackkart.db Download. You will see following information focus on marked values
 
   ![q13](https://github.com/user-attachments/assets/61d4a266-a801-45b1-9d70-742ae18207ec)
 
@@ -131,7 +131,7 @@ ReachKart is an e-commerce website running on Ehtereum blockchain technology, to
   ![q15](https://github.com/user-attachments/assets/8ca6725b-5f73-4a5b-8e1f-e55a33e8691c)
 
 - Ether Value is in Hex. Convert it into decimal and divide by 10^8 to get the Ether value in Ether. Value: 0x1bc16d674ec80000(Hex) to 200000000(decimal) ~ 2.0 Ether
-- look into data of next 7  transactions and add them up to get toalt ether stolen
+- look into data of next 7  transactions and add them up to get total ether stolen
 - at the end of above transactions There is traffic request for user wallet currency query
 
   ![q16](https://github.com/user-attachments/assets/4382143d-6e54-4680-8c1e-f8645fde3a6b)
