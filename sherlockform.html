@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sherlock Challenge Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            color: #2c3e50;
+        }
+        input[type="text"], input[type="date"], select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #e1e8ed; 
+            border-radius: 6px; 
+            font-size: 14px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        textarea { 
+            height: 100px; 
+            font-family: 'Consolas', 'Monaco', monospace; 
+            resize: vertical;
+        }
+        .textarea-large { 
+            height: 150px; 
+        }
+        button { 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white; 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        .help-text { 
+            font-size: 13px; 
+            color: #7f8c8d; 
+            font-style: italic; 
+            margin-top: 5px;
+        }
+        .required { color: #e74c3c; }
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕵️ Sherlock Challenge Documentation</h1>
+        
+        <form action="https://sidmallipeddi.app.n8n.cloud/webhook/Sherlock-findings" method="POST">
+            
+            <div class="form-group">
+                <label for="challenge_name">Challenge Name <span class="required">*</span></label>
+                <input type="text" id="challenge_name" name="challenge_name" required 
+                       placeholder="e.g., OpTinselTrace-1">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="platform">Platform <span class="required">*</span></label>
+                    <select id="platform" name="platform" required>
+                        <option value="">Select Platform</option>
+                        <option value="HackTheBox Sherlock">HackTheBox Sherlock</option>
+                        <option value="Blue Team Labs Online">Blue Team Labs Online</option>
+                        <option value="CyberDefenders">CyberDefenders</option>
+                        <option value="TryHackMe">TryHackMe</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="difficulty">Difficulty <span class="required">*</span></label>
+                    <select id="difficulty" name="difficulty" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                        <option value="Insane">Insane</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date_completed">Date Completed <span class="required">*</span></label>
+                <input type="date" id="date_completed" name="date_completed" required>
+            </div>
+
+            <div class="form-group">
+                <label for="scenario_description">Scenario Description <span class="required">*</span></label>
+                <textarea id="scenario_description" name="scenario_description" required 
+                          placeholder="Brief description of the scenario/case you investigated..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="investigation_summary">Investigation Summary <span class="required">*</span></label>
+                <textarea id="investigation_summary" name="investigation_summary" required class="textarea-large"
+                          placeholder="Summarize your investigation approach, key steps, and methodology..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="tools_used">Tools Used <span class="required">*</span></label>
+                <input type="text" id="tools_used" name="tools_used" required 
+                       placeholder="Wireshark, EventViewer, Timeline Explorer, etc. (comma separated)">
+                <div class="help-text">List all tools you used, separated by commas</div>
+            </div>
+
+            <div class="form-group">
+                <label for="questions">Questions and Answers</label>
+                <textarea id="questions" name="questions" class="textarea-large"
+                          placeholder="Format (3 lines per question):&#10;What is the attacker's IP address?&#10;192.168.1.100&#10;HTB{ip_found}&#10;&#10;What malware was used?&#10;TrojanX.exe&#10;HTB{malware_identified}"></textarea>
+                <div class="help-text">Enter each question, answer, and flag on separate lines (3 lines per Q&A)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="key_findings">Key Findings <span class="required">*</span></label>
+                <textarea id="key_findings" name="key_findings" required class="textarea-large"
+                          placeholder="One finding per line:&#10;Attacker gained initial access via phishing email&#10;Malware executed at 2024-01-15 14:30:00 UTC&#10;Sensitive data was exfiltrated to external server"></textarea>
+                <div class="help-text">Enter each key finding on a new line</div>
+            </div>
+
+            <div class="form-group">
+                <label for="screenshots">Screenshots</label>
+                <textarea id="screenshots" name="screenshots" class="textarea-large"
+                          placeholder="Format (2 lines per screenshot):&#10;wireshark_analysis.png&#10;Network traffic analysis showing suspicious connections&#10;&#10;event_logs.png&#10;Windows Event Logs showing malware execution"></textarea>
+                <div class="help-text">Enter filename and description on separate lines (2 lines per screenshot)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="lessons_learned">Lessons Learned</label>
+                <textarea id="lessons_learned" name="lessons_learned" class="textarea-large"
+                          placeholder="One lesson per line:&#10;Always correlate timestamps across multiple log sources&#10;Network traffic analysis is crucial for understanding attack vectors&#10;Timeline reconstruction helps identify the full attack chain"></textarea>
+                <div class="help-text">Enter each lesson learned on a new line</div>
+            </div>
+
+            <button type="submit">🚀 Generate Documentation</button>
+        </form>
+
+        <script>
+            // Set today's date as default
+            document.getElementById('date_completed').valueAsDate = new Date();
+            
+            // Form validation feedback
+            document.querySelector('form').addEventListener('submit', function(e) {
+                const button = document.querySelector('button');
+                button.innerHTML = '⏳ Processing...';
+                button.disabled = true;
+            });
+        </script>
+    </div>
+</body>
+</html>
