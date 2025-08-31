@@ -272,7 +272,40 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .task-counter {
+        .info-box {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .info-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin: 5px 0;
+        }
+
+        .helper-text {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .helper-text strong {
+            color: #2c3e50;
+        }
             background: #3498db;
             color: white;
             padding: 5px 10px;
@@ -301,6 +334,40 @@
                 <textarea id="scenario" placeholder="Describe the investigation scenario..."></textarea>
             </div>
 
+            <div class="info-box">
+                <h4>🔍 HTB Sherlock Integration Guide</h4>
+                <p><strong>Quick Setup:</strong></p>
+                <ul>
+                    <li>🔗 <strong>Enter HTB URL:</strong> Paste your Sherlock challenge URL for auto-titling</li>
+                    <li>📝 <strong>Bulk Import:</strong> Copy all questions from HTB and paste them in the bulk import area</li>
+                    <li>🎯 <strong>Auto-Create:</strong> Click to generate common DFIR investigation sections</li>
+                </ul>
+                <p><strong>💡 Pro Tip:</strong> Use Ctrl+A on the HTB questions page, then copy and paste into bulk import!</p>
+            </div>
+
+            <!-- HTB Sherlock URL Input -->
+            <div class="form-group">
+                <label for="htb-url">🔗 HTB Sherlock URL (Optional)</label>
+                <input type="text" id="htb-url" placeholder="https://app.hackthebox.com/sherlocks/sherlock-name">
+                <small style="color: #666; font-size: 0.9em; margin-top: 5px; display: block;">
+                    ℹ️ Note: Due to HTB's authentication requirements, you'll need to manually copy questions from the platform
+                </small>
+            </div>
+
+            <!-- Quick Question Import -->
+            <div class="form-group">
+                <label for="bulk-questions">📝 Bulk Import Questions (Optional)</label>
+                <textarea id="bulk-questions" placeholder="Paste questions here, one per line:&#10;1. What was the vulnerable endpoint?&#10;2. When was the attack launched?&#10;3. What tool was used?"></textarea>
+                <button class="btn btn-secondary" onclick="importBulkQuestions()" style="margin-top: 10px;">⚡ Import Questions</button>
+            <div class="helper-text">
+                <strong>📋 HTB Questions Format Examples:</strong><br>
+                • "What was the vulnerable endpoint that allowed the attacker to leak files?"<br>
+                • "When was the first successful exploitation (time in UTC)?"<br>
+                • "Which version of Express is currently being used?"<br>
+                <em>Just paste questions one per line - numbering will be handled automatically!</em>
+            </div>
+            </div>
+
             <!-- Sections -->
             <div id="sections-container">
                 <!-- Sections will be added here dynamically -->
@@ -308,6 +375,7 @@
 
             <div class="controls">
                 <button class="btn btn-secondary" onclick="addSection()">➕ Add Section</button>
+                <button class="btn btn-secondary" onclick="autoCreateFromHTB()">🎯 Auto-Create from HTB Info</button>
                 <button class="btn btn-primary" onclick="generateMarkdown()">🚀 Generate Documentation</button>
                 <button class="btn btn-success" onclick="downloadMarkdown()">💾 Download Markdown</button>
             </div>
@@ -384,7 +452,115 @@
             }
         }
 
-        function renderSections() {
+        function importBulkQuestions() {
+            const bulkText = document.getElementById('bulk-questions').value.trim();
+            if (!bulkText) {
+                alert('Please enter questions to import');
+                return;
+            }
+
+            const lines = bulkText.split('\n').filter(line => line.trim());
+            if (lines.length === 0) {
+                alert('No valid questions found');
+                return;
+            }
+
+            // Create or get the first section
+            if (sections.length === 0) {
+                addSection();
+            }
+            
+            const section = sections[0];
+            section.title = section.title || 'Investigation Tasks';
+            
+            // Clear existing tasks
+            section.tasks = [];
+            
+            // Add questions as tasks
+            lines.forEach((line, index) => {
+                const cleanLine = line.replace(/^\d+\.?\s*/, '').trim(); // Remove numbers from start
+                if (cleanLine) {
+                    section.tasks.push({
+                        id: Date.now() + index,
+                        number: index + 1,
+                        question: cleanLine,
+                        answer: '',
+                        image: null
+                    });
+                }
+            });
+
+            renderSections();
+            alert(`Imported ${section.tasks.length} questions successfully!`);
+            
+            // Clear the bulk input
+            document.getElementById('bulk-questions').value = '';
+        }
+
+        function autoCreateFromHTB() {
+            const htbUrl = document.getElementById('htb-url').value.trim();
+            const title = document.getElementById('title').value.trim();
+            
+            if (htbUrl) {
+                // Extract Sherlock name from URL
+                const match = htbUrl.match(/\/sherlocks\/([^\/\?]+)/);
+                if (match) {
+                    const sherlockName = match[1].replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    if (!title) {
+                        document.getElementById('title').value = `${sherlockName} - DFIR Analysis (HackTheBox)`;
+                    }
+                }
+            }
+
+            // Create common HTB sections if none exist
+            if (sections.length === 0) {
+                const commonSections = [
+                    {
+                        title: 'Initial Analysis',
+                        description: 'Initial investigation and environment setup analysis.',
+                        taskCount: 3
+                    },
+                    {
+                        title: 'Attack Vector Investigation', 
+                        description: 'Analysis of the attack methodology and entry points.',
+                        taskCount: 4
+                    },
+                    {
+                        title: 'Timeline and Impact Assessment',
+                        description: 'Establishing timeline of events and assessing impact.',
+                        taskCount: 3
+                    }
+                ];
+
+                commonSections.forEach((sectionData, index) => {
+                    sectionCounter++;
+                    const section = {
+                        id: sectionCounter,
+                        title: sectionData.title,
+                        description: sectionData.description,
+                        tasks: []
+                    };
+
+                    // Add placeholder tasks
+                    for (let i = 0; i < sectionData.taskCount; i++) {
+                        section.tasks.push({
+                            id: Date.now() + index * 100 + i,
+                            number: i + 1,
+                            question: `Investigation question ${i + 1}...`,
+                            answer: '',
+                            image: null
+                        });
+                    }
+
+                    sections.push(section);
+                });
+
+                renderSections();
+                alert('Created common HTB investigation sections! You can now paste specific questions or modify as needed.');
+            } else {
+                alert('Sections already exist. Use "Import Questions" to add questions to existing sections.');
+            }
+        }
             const container = document.getElementById('sections-container');
             container.innerHTML = '';
 
