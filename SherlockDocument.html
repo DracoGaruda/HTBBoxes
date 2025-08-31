@@ -86,77 +86,109 @@
             min-height: 120px;
         }
 
-        .section-input {
-            background: #f8f9fa;
+        .bulk-import {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
             padding: 25px;
             border-radius: 15px;
             margin-bottom: 30px;
-            border: 2px solid #e9ecef;
         }
 
-        .section-header {
+        .bulk-import h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .bulk-import textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .bulk-import textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .bulk-import .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .bulk-import .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .task-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+        }
+
+        .task-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
 
-        .section-title {
-            font-size: 1.3em;
-            color: #2c3e50;
+        .task-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
             font-weight: 700;
+            font-size: 1.1em;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .remove-section {
+        .task-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+        }
+
+        .status-indicator.complete {
+            background: #27ae60;
+        }
+
+        .remove-task {
             background: #e74c3c;
             color: white;
             border: none;
             padding: 8px 15px;
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-size: 12px;
+            transition: all 0.3s ease;
         }
 
-        .remove-section:hover {
+        .remove-task:hover {
             background: #c0392b;
+            transform: translateY(-1px);
         }
 
-        .questions-container {
-            margin-top: 20px;
-        }
-
-        .question-item {
+        .task-content {
             background: white;
             padding: 20px;
             border-radius: 12px;
-            margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e9ecef;
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .question-number {
-            background: #667eea;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .remove-question {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
         }
 
         .image-upload {
@@ -167,6 +199,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             background: #f8f9ff;
+            margin-top: 15px;
         }
 
         .image-upload:hover {
@@ -225,6 +258,21 @@
             text-align: center;
             padding: 30px;
             background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .task-counter {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
 
         .output {
@@ -251,6 +299,11 @@
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #2980b9;
         }
 
         .markdown-output {
@@ -272,13 +325,28 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .task-counter {
-            background: #3498db;
+        .quick-add {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
             color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .quick-add h4 {
+            margin-bottom: 15px;
+        }
+
+        .quick-add input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            margin-right: 10px;
+            width: 100px;
+        }
+
+        .quick-add input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
     </style>
 </head>
@@ -286,7 +354,7 @@
     <div class="container">
         <div class="header">
             <h1>🔍 DFIR Analysis Documentation Generator</h1>
-            <p>Create professional cybersecurity investigation reports with ease</p>
+            <p>Task-focused documentation for HTB Sherlock challenges</p>
         </div>
 
         <div class="input-section">
@@ -301,13 +369,38 @@
                 <textarea id="scenario" placeholder="Describe the investigation scenario..."></textarea>
             </div>
 
-            <!-- Sections -->
-            <div id="sections-container">
-                <!-- Sections will be added here dynamically -->
+            <!-- Quick Task Setup -->
+            <div class="quick-add">
+                <h4>⚡ Quick Setup</h4>
+                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <input type="number" id="task-count" placeholder="15" min="1" max="50">
+                    <button class="btn btn-secondary" onclick="createTasks()" style="margin: 0;">Create Tasks</button>
+                    <span style="opacity: 0.8;">Create empty tasks to fill in questions</span>
+                </div>
+            </div>
+
+            <!-- Bulk Import -->
+            <div class="bulk-import">
+                <h3>📝 Bulk Import Questions</h3>
+                <textarea id="bulk-questions" placeholder="Paste all your HTB questions here, one per line:&#10;1. What was the vulnerable endpoint?&#10;2. When was the attack launched?&#10;3. What tool was used?"></textarea>
+                <button class="btn" onclick="importBulkQuestions()">⚡ Import Questions</button>
+                <p style="margin-top: 10px; opacity: 0.8; font-size: 0.9em;">
+                    💡 Tip: Copy all questions from HTB and paste here - they'll be automatically parsed and numbered!
+                </p>
+            </div>
+
+            <!-- Task Counter -->
+            <div class="task-counter">
+                <span id="task-stats">📋 0 Tasks Created | ✅ 0 Complete | 📝 0 Remaining</span>
+            </div>
+
+            <!-- Tasks Container -->
+            <div id="tasks-container">
+                <!-- Tasks will be added here dynamically -->
             </div>
 
             <div class="controls">
-                <button class="btn btn-secondary" onclick="addSection()">➕ Add Section</button>
+                <button class="btn btn-secondary" onclick="addSingleTask()">➕ Add Single Task</button>
                 <button class="btn btn-primary" onclick="generateMarkdown()">🚀 Generate Documentation</button>
                 <button class="btn btn-success" onclick="downloadMarkdown()">💾 Download Markdown</button>
             </div>
@@ -323,156 +416,175 @@
     </div>
 
     <script>
-        let sectionCounter = 0;
-        let sections = [];
+        let tasks = [];
+        let taskCounter = 0;
 
-        function addSection() {
-            sectionCounter++;
-            const section = {
-                id: sectionCounter,
-                title: '',
-                description: '',
-                tasks: []
-            };
-            sections.push(section);
-            renderSections();
-        }
-
-        function removeSection(sectionId) {
-            sections = sections.filter(s => s.id !== sectionId);
-            renderSections();
-        }
-
-        function addTask(sectionId) {
-            const section = sections.find(s => s.id === sectionId);
-            if (section) {
-                const taskNumber = section.tasks.length + 1;
-                section.tasks.push({
-                    id: Date.now(),
-                    number: taskNumber,
+        function createTasks() {
+            const count = parseInt(document.getElementById('task-count').value) || 10;
+            tasks = [];
+            taskCounter = 0;
+            
+            for (let i = 1; i <= count; i++) {
+                tasks.push({
+                    id: i,
+                    number: i,
                     question: '',
                     answer: '',
+                    explanation: '',
                     image: null
                 });
-                renderSections();
+            }
+            taskCounter = count;
+            renderTasks();
+            updateTaskStats();
+        }
+
+        function addSingleTask() {
+            taskCounter++;
+            tasks.push({
+                id: taskCounter,
+                number: taskCounter,
+                question: '',
+                answer: '',
+                explanation: '',
+                image: null
+            });
+            renderTasks();
+            updateTaskStats();
+        }
+
+        function removeTask(taskId) {
+            tasks = tasks.filter(t => t.id !== taskId);
+            // Renumber tasks
+            tasks.forEach((task, index) => {
+                task.number = index + 1;
+            });
+            renderTasks();
+            updateTaskStats();
+        }
+
+        function importBulkQuestions() {
+            const bulkText = document.getElementById('bulk-questions').value.trim();
+            if (!bulkText) {
+                alert('Please enter questions to import');
+                return;
+            }
+
+            const lines = bulkText.split('\n').filter(line => line.trim());
+            tasks = [];
+            taskCounter = 0;
+
+            lines.forEach((line, index) => {
+                const cleanLine = line.replace(/^\d+\.?\s*/, '').trim();
+                if (cleanLine) {
+                    taskCounter++;
+                    tasks.push({
+                        id: taskCounter,
+                        number: taskCounter,
+                        question: cleanLine.endsWith('?') ? cleanLine : cleanLine + '?',
+                        answer: '',
+                        explanation: '',
+                        image: null
+                    });
+                }
+            });
+
+            renderTasks();
+            updateTaskStats();
+            document.getElementById('bulk-questions').value = '';
+            alert(`Imported ${tasks.length} questions successfully!`);
+        }
+
+        function updateTask(taskId, field, value) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task[field] = value;
+                updateTaskStats();
             }
         }
 
-        function removeTask(sectionId, taskId) {
-            const section = sections.find(s => s.id === sectionId);
-            if (section) {
-                section.tasks = section.tasks.filter(t => t.id !== taskId);
-                // Renumber tasks
-                section.tasks.forEach((task, index) => {
-                    task.number = index + 1;
-                });
-                renderSections();
-            }
-        }
-
-        function handleImageUpload(sectionId, taskId, event) {
+        function handleImageUpload(taskId, event) {
             const file = event.target.files[0];
             if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const section = sections.find(s => s.id === sectionId);
-                    const task = section.tasks.find(t => t.id === taskId);
+                    const task = tasks.find(t => t.id === taskId);
                     task.image = e.target.result;
-                    renderSections();
+                    renderTasks();
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function renderSections() {
-            const container = document.getElementById('sections-container');
+        function updateTaskStats() {
+            const totalTasks = tasks.length;
+            const completeTasks = tasks.filter(t => t.question && t.answer).length;
+            const remainingTasks = totalTasks - completeTasks;
+            
+            document.getElementById('task-stats').textContent = 
+                `📋 ${totalTasks} Tasks Created | ✅ ${completeTasks} Complete | 📝 ${remainingTasks} Remaining`;
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasks-container');
             container.innerHTML = '';
 
-            sections.forEach(section => {
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'section-input fade-in';
+            tasks.forEach(task => {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task-item fade-in';
                 
-                sectionDiv.innerHTML = `
-                    <div class="section-header">
-                        <span class="section-title">Section ${section.id}</span>
-                        <div>
-                            <span class="task-counter">${section.tasks.length} Tasks</span>
-                            <button class="remove-section" onclick="removeSection(${section.id})">🗑️ Remove</button>
+                const isComplete = task.question && task.answer;
+                
+                taskDiv.innerHTML = `
+                    <div class="task-header">
+                        <span class="task-number">Task ${task.number}</span>
+                        <div class="task-status">
+                            <span class="status-indicator ${isComplete ? 'complete' : ''}"></span>
+                            <span style="font-size: 0.9em; color: #666;">
+                                ${isComplete ? 'Complete' : 'Incomplete'}
+                            </span>
+                            <button class="remove-task" onclick="removeTask(${task.id})">🗑️</button>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Section Title</label>
-                        <input type="text" value="${section.title}" 
-                               onchange="updateSection(${section.id}, 'title', this.value)"
-                               placeholder="e.g., Path Traversal Attack">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Section Description</label>
-                        <textarea onchange="updateSection(${section.id}, 'description', this.value)"
-                                  placeholder="Describe the investigation steps and methodology...">${section.description}</textarea>
-                    </div>
-                    
-                    <div class="questions-container">
-                        ${section.tasks.map(task => `
-                            <div class="question-item">
-                                <div class="question-header">
-                                    <span class="question-number">Task ${task.number}</span>
-                                    <button class="remove-question" onclick="removeTask(${section.id}, ${task.id})">Remove</button>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Question</label>
-                                    <input type="text" value="${task.question}"
-                                           onchange="updateTask(${section.id}, ${task.id}, 'question', this.value)"
-                                           placeholder="What was the vulnerable endpoint...?">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Answer</label>
-                                    <input type="text" value="${task.answer}"
-                                           onchange="updateTask(${section.id}, ${task.id}, 'answer', this.value)"
-                                           placeholder="/user/getOrderBill">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Screenshot/Image (Optional)</label>
-                                    <div class="image-upload" onclick="document.getElementById('img-${section.id}-${task.id}').click()">
-                                        ${task.image ? 
-                                            `<img src="${task.image}" class="image-preview" alt="Task ${task.number} Screenshot">
-                                             <p>Click to change image</p>` :
-                                            `<p>📷 Click to upload screenshot</p>`
-                                        }
-                                    </div>
-                                    <input type="file" id="img-${section.id}-${task.id}" 
-                                           accept="image/*" style="display: none;"
-                                           onchange="handleImageUpload(${section.id}, ${task.id}, event)">
-                                </div>
-                            </div>
-                        `).join('')}
+                    <div class="task-content">
+                        <div class="form-group">
+                            <label>Question</label>
+                            <input type="text" value="${task.question}" 
+                                   onchange="updateTask(${task.id}, 'question', this.value)"
+                                   placeholder="What was the vulnerable endpoint that allowed the attacker to leak files?">
+                        </div>
                         
-                        <button class="btn btn-secondary" onclick="addTask(${section.id})">➕ Add Task</button>
+                        <div class="form-group">
+                            <label>Answer</label>
+                            <input type="text" value="${task.answer}"
+                                   onchange="updateTask(${task.id}, 'answer', this.value)"
+                                   placeholder="/user/getOrderBill">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Additional Explanation/Analysis (Optional)</label>
+                            <textarea onchange="updateTask(${task.id}, 'explanation', this.value)"
+                                      placeholder="Provide detailed analysis, methodology, or additional context for this task...">${task.explanation}</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Screenshot/Evidence (Optional)</label>
+                            <div class="image-upload" onclick="document.getElementById('img-${task.id}').click()">
+                                ${task.image ? 
+                                    `<img src="${task.image}" class="image-preview" alt="Task ${task.number} Screenshot">
+                                     <p>Click to change image</p>` :
+                                    `<p>📷 Click to upload screenshot</p>`
+                                }
+                            </div>
+                            <input type="file" id="img-${task.id}" accept="image/*" style="display: none;"
+                                   onchange="handleImageUpload(${task.id}, event)">
+                        </div>
                     </div>
                 `;
                 
-                container.appendChild(sectionDiv);
+                container.appendChild(taskDiv);
             });
-        }
-
-        function updateSection(sectionId, field, value) {
-            const section = sections.find(s => s.id === sectionId);
-            if (section) {
-                section[field] = value;
-            }
-        }
-
-        function updateTask(sectionId, taskId, field, value) {
-            const section = sections.find(s => s.id === sectionId);
-            const task = section.tasks.find(t => t.id === taskId);
-            if (task) {
-                task[field] = value;
-            }
         }
 
         function generateMarkdown() {
@@ -483,25 +595,25 @@
             markdown += `## Scenario Overview\n\n${scenario}\n\n---\n\n`;
             markdown += `## Investigation Tasks\n\n`;
 
-            sections.forEach(section => {
-                if (section.title) {
-                    markdown += `### Section ${section.id}: ${section.title}\n\n`;
-                    if (section.description) {
-                        markdown += `${section.description}\n\n`;
+            tasks.forEach(task => {
+                if (task.question) {
+                    markdown += `### Task ${task.number}\n`;
+                    markdown += `**Question:** ${task.question}\n`;
+                    
+                    if (task.answer) {
+                        markdown += `**Answer:** \`${task.answer}\`\n\n`;
+                    } else {
+                        markdown += `**Answer:** \`[Not answered yet]\`\n\n`;
                     }
-
-                    section.tasks.forEach(task => {
-                        if (task.question && task.answer) {
-                            markdown += `#### Task ${task.number}\n`;
-                            markdown += `**Question:** ${task.question}\n`;
-                            markdown += `**Answer:** \`${task.answer}\`\n\n`;
-                            
-                            if (task.image) {
-                                markdown += `![Task ${task.number} Screenshot](data:image/png;base64,${task.image.split(',')[1]})\n\n`;
-                            }
-                        }
-                    });
-
+                    
+                    if (task.explanation) {
+                        markdown += `${task.explanation}\n\n`;
+                    }
+                    
+                    if (task.image) {
+                        markdown += `![Task ${task.number} Screenshot](data:image/png;base64,${task.image.split(',')[1]})\n\n`;
+                    }
+                    
                     markdown += `---\n\n`;
                 }
             });
@@ -540,8 +652,8 @@
             URL.revokeObjectURL(url);
         }
 
-        // Initialize with one section
-        addSection();
+        // Initialize
+        updateTaskStats();
     </script>
 </body>
 </html>
