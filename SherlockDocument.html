@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DFIR Analysis Documentation Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .input-section {
+            padding: 40px;
+            background: white;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .section-input {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .remove-section {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .remove-section:hover {
+            background: #c0392b;
+        }
+
+        .questions-container {
+            margin-top: 20px;
+        }
+
+        .question-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .remove-question {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .image-upload {
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .image-upload:hover {
+            border-color: #5a6fd8;
+            background: #f0f4ff;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .controls {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .output {
+            margin-top: 40px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .output-header {
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .markdown-output {
+            padding: 30px;
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .task-counter {
+            background: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 DFIR Analysis Documentation Generator</h1>
+            <p>Create professional cybersecurity investigation reports with ease</p>
+        </div>
+
+        <div class="input-section">
+            <!-- Basic Info -->
+            <div class="form-group">
+                <label for="title">📋 Investigation Title</label>
+                <input type="text" id="title" placeholder="e.g., ReachKart - DFIR Analysis (HackTheBox)">
+            </div>
+
+            <div class="form-group">
+                <label for="scenario">📖 Scenario Overview</label>
+                <textarea id="scenario" placeholder="Describe the investigation scenario..."></textarea>
+            </div>
+
+            <!-- Sections -->
+            <div id="sections-container">
+                <!-- Sections will be added here dynamically -->
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-secondary" onclick="addSection()">➕ Add Section</button>
+                <button class="btn btn-primary" onclick="generateMarkdown()">🚀 Generate Documentation</button>
+                <button class="btn btn-success" onclick="downloadMarkdown()">💾 Download Markdown</button>
+            </div>
+        </div>
+
+        <div id="output" class="output" style="display: none;">
+            <div class="output-header">
+                <h3>📄 Generated Markdown</h3>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+            </div>
+            <div id="markdown-output" class="markdown-output"></div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+        let sections = [];
+
+        function addSection() {
+            sectionCounter++;
+            const section = {
+                id: sectionCounter,
+                title: '',
+                description: '',
+                tasks: []
+            };
+            sections.push(section);
+            renderSections();
+        }
+
+        function removeSection(sectionId) {
+            sections = sections.filter(s => s.id !== sectionId);
+            renderSections();
+        }
+
+        function addTask(sectionId) {
+            const section = sections.find(s => s.id === sectionId);
+            if (section) {
+                const taskNumber = section.tasks.length + 1;
+                section.tasks.push({
+                    id: Date.now(),
+                    number: taskNumber,
+                    question: '',
+                    answer: '',
+                    image: null
+                });
+                renderSections();
+            }
+        }
+
+        function removeTask(sectionId, taskId) {
+            const section = sections.find(s => s.id === sectionId);
+            if (section) {
+                section.tasks = section.tasks.filter(t => t.id !== taskId);
+                // Renumber tasks
+                section.tasks.forEach((task, index) => {
+                    task.number = index + 1;
+                });
+                renderSections();
+            }
+        }
+
+        function handleImageUpload(sectionId, taskId, event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const section = sections.find(s => s.id === sectionId);
+                    const task = section.tasks.find(t => t.id === taskId);
+                    task.image = e.target.result;
+                    renderSections();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderSections() {
+            const container = document.getElementById('sections-container');
+            container.innerHTML = '';
+
+            sections.forEach(section => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section-input fade-in';
+                
+                sectionDiv.innerHTML = `
+                    <div class="section-header">
+                        <span class="section-title">Section ${section.id}</span>
+                        <div>
+                            <span class="task-counter">${section.tasks.length} Tasks</span>
+                            <button class="remove-section" onclick="removeSection(${section.id})">🗑️ Remove</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Section Title</label>
+                        <input type="text" value="${section.title}" 
+                               onchange="updateSection(${section.id}, 'title', this.value)"
+                               placeholder="e.g., Path Traversal Attack">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Section Description</label>
+                        <textarea onchange="updateSection(${section.id}, 'description', this.value)"
+                                  placeholder="Describe the investigation steps and methodology...">${section.description}</textarea>
+                    </div>
+                    
+                    <div class="questions-container">
+                        ${section.tasks.map(task => `
+                            <div class="question-item">
+                                <div class="question-header">
+                                    <span class="question-number">Task ${task.number}</span>
+                                    <button class="remove-question" onclick="removeTask(${section.id}, ${task.id})">Remove</button>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Question</label>
+                                    <input type="text" value="${task.question}"
+                                           onchange="updateTask(${section.id}, ${task.id}, 'question', this.value)"
+                                           placeholder="What was the vulnerable endpoint...?">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Answer</label>
+                                    <input type="text" value="${task.answer}"
+                                           onchange="updateTask(${section.id}, ${task.id}, 'answer', this.value)"
+                                           placeholder="/user/getOrderBill">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Screenshot/Image (Optional)</label>
+                                    <div class="image-upload" onclick="document.getElementById('img-${section.id}-${task.id}').click()">
+                                        ${task.image ? 
+                                            `<img src="${task.image}" class="image-preview" alt="Task ${task.number} Screenshot">
+                                             <p>Click to change image</p>` :
+                                            `<p>📷 Click to upload screenshot</p>`
+                                        }
+                                    </div>
+                                    <input type="file" id="img-${section.id}-${task.id}" 
+                                           accept="image/*" style="display: none;"
+                                           onchange="handleImageUpload(${section.id}, ${task.id}, event)">
+                                </div>
+                            </div>
+                        `).join('')}
+                        
+                        <button class="btn btn-secondary" onclick="addTask(${section.id})">➕ Add Task</button>
+                    </div>
+                `;
+                
+                container.appendChild(sectionDiv);
+            });
+        }
+
+        function updateSection(sectionId, field, value) {
+            const section = sections.find(s => s.id === sectionId);
+            if (section) {
+                section[field] = value;
+            }
+        }
+
+        function updateTask(sectionId, taskId, field, value) {
+            const section = sections.find(s => s.id === sectionId);
+            const task = section.tasks.find(t => t.id === taskId);
+            if (task) {
+                task[field] = value;
+            }
+        }
+
+        function generateMarkdown() {
+            const title = document.getElementById('title').value || 'DFIR Analysis Report';
+            const scenario = document.getElementById('scenario').value || 'Investigation scenario...';
+            
+            let markdown = `# ![logo](https://github.com/user-attachments/assets/739ac72d-d6a0-4e10-abbb-31c46fccc07b) ${title}\n\n`;
+            markdown += `## Scenario Overview\n\n${scenario}\n\n---\n\n`;
+            markdown += `## Investigation Tasks\n\n`;
+
+            sections.forEach(section => {
+                if (section.title) {
+                    markdown += `### Section ${section.id}: ${section.title}\n\n`;
+                    if (section.description) {
+                        markdown += `${section.description}\n\n`;
+                    }
+
+                    section.tasks.forEach(task => {
+                        if (task.question && task.answer) {
+                            markdown += `#### Task ${task.number}\n`;
+                            markdown += `**Question:** ${task.question}\n`;
+                            markdown += `**Answer:** \`${task.answer}\`\n\n`;
+                            
+                            if (task.image) {
+                                markdown += `![Task ${task.number} Screenshot](data:image/png;base64,${task.image.split(',')[1]})\n\n`;
+                            }
+                        }
+                    });
+
+                    markdown += `---\n\n`;
+                }
+            });
+
+            markdown += `### Summary\n\n`;
+            markdown += `Investigation completed successfully. Key findings and recommendations documented above.\n\n---`;
+
+            document.getElementById('markdown-output').textContent = markdown;
+            document.getElementById('output').style.display = 'block';
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const markdown = document.getElementById('markdown-output').textContent;
+            navigator.clipboard.writeText(markdown).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = originalText, 2000);
+            });
+        }
+
+        function downloadMarkdown() {
+            const markdown = document.getElementById('markdown-output').textContent;
+            const title = document.getElementById('title').value || 'DFIR_Analysis_Report';
+            const filename = `${title.replace(/[^a-zA-Z0-9]/g, '_')}.md`;
+            
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize with one section
+        addSection();
+    </script>
+</body>
+</html>
