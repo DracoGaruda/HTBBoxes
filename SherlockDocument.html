@@ -454,114 +454,144 @@
         }
 
         function importBulkQuestions() {
+            console.log('Import function called');
             const bulkText = document.getElementById('bulk-questions').value.trim();
+            console.log('Bulk text:', bulkText);
+            
             if (!bulkText) {
                 alert('Please enter text to extract questions from');
                 return;
             }
 
-            const extractedQuestions = extractQuestionsFromText(bulkText);
-            
-            if (extractedQuestions.length === 0) {
-                alert('No questions detected. Questions should end with "?" or contain keywords like "What", "When", "How", etc.');
-                return;
-            }
+            try {
+                const extractedQuestions = extractQuestionsFromText(bulkText);
+                console.log('Extracted questions:', extractedQuestions);
+                
+                if (extractedQuestions.length === 0) {
+                    // If no questions detected, let's try a simpler approach
+                    const lines = bulkText.split('\n').map(line => line.trim()).filter(line => line.length > 5);
+                    console.log('Fallback to lines:', lines);
+                    
+                    if (lines.length > 0) {
+                        // Create or get the first section
+                        if (sections.length === 0) {
+                            addSection();
+                        }
+                        
+                        const section = sections[0];
+                        section.title = section.title || 'Investigation Tasks';
+                        section.tasks = [];
+                        
+                        // Add all non-empty lines as questions
+                        lines.forEach((line, index) => {
+                            const cleanLine = line.replace(/^\d+[\.\)\s]*/, '').trim();
+                            if (cleanLine.length > 0) {
+                                section.tasks.push({
+                                    id: Date.now() + index,
+                                    number: index + 1,
+                                    question: cleanLine.endsWith('?') ? cleanLine : cleanLine + '?',
+                                    answer: '',
+                                    image: null
+                                });
+                            }
+                        });
+                        
+                        renderSections();
+                        alert(`Imported ${section.tasks.length} lines as questions!`);
+                        document.getElementById('bulk-questions').value = '';
+                        return;
+                    }
+                    
+                    alert('No questions detected. Please check the text format.');
+                    return;
+                }
 
-            // Create or get the first section
-            if (sections.length === 0) {
-                addSection();
-            }
-            
-            const section = sections[0];
-            section.title = section.title || 'Investigation Tasks';
-            
-            // Clear existing tasks
-            section.tasks = [];
-            
-            // Add detected questions as tasks
-            extractedQuestions.forEach((question, index) => {
-                section.tasks.push({
-                    id: Date.now() + index,
-                    number: index + 1,
-                    question: question,
-                    answer: '',
-                    image: null
+                // Create or get the first section
+                if (sections.length === 0) {
+                    addSection();
+                }
+                
+                const section = sections[0];
+                section.title = section.title || 'Investigation Tasks';
+                
+                // Clear existing tasks
+                section.tasks = [];
+                
+                // Add detected questions as tasks
+                extractedQuestions.forEach((question, index) => {
+                    section.tasks.push({
+                        id: Date.now() + index,
+                        number: index + 1,
+                        question: question,
+                        answer: '',
+                        image: null
+                    });
                 });
-            });
 
-            renderSections();
-            alert(`Auto-detected and imported ${section.tasks.length} questions successfully!`);
-            
-            // Clear the bulk input
-            document.getElementById('bulk-questions').value = '';
-            
-            // Show detected questions in console for debugging
-            console.log('Detected Questions:', extractedQuestions);
+                renderSections();
+                alert(`Auto-detected and imported ${section.tasks.length} questions successfully!`);
+                
+                // Clear the bulk input
+                document.getElementById('bulk-questions').value = '';
+                
+            } catch (error) {
+                console.error('Error in import:', error);
+                alert('Error importing questions: ' + error.message);
+            }
         }
 
         function extractQuestionsFromText(text) {
+            console.log('Starting question extraction from:', text.substring(0, 100) + '...');
             const questions = [];
             
-            // Split text into sentences/lines
-            const lines = text.split(/[\n\r]+/).map(line => line.trim()).filter(line => line.length > 0);
+            // First, try to split by common delimiters
+            let segments = [];
             
-            // Question detection patterns
-            const questionPatterns = [
-                // Direct question marks
-                /^.*\?$/,
-                // Question words at start
-                /^(what|when|where|who|why|how|which|can|could|would|should|is|are|was|were|do|does|did|will)\b.*$/i,
-                // Numbered questions
-                /^\d+[\.\)]\s*(what|when|where|who|why|how|which|can|could|would|should|is|are|was|were|do|does|did|will)\b.*$/i,
-                // Task/Question labels
-                /^(task|question|q)\s*\d*[\:\.\s]+.*$/i
-            ];
-
-            lines.forEach(line => {
-                let cleanLine = line.trim();
+            // Split by multiple delimiters
+            if (text.includes('\n')) {
+                segments = text.split('\n');
+            } else if (text.includes('?')) {
+                segments = text.split('?').map(s => s.trim() + '?');
+            } else {
+                segments = text.split(/[.!]+/).map(s => s.trim());
+            }
+            
+            console.log('Text segments:', segments);
+            
+            segments.forEach((segment, index) => {
+                let cleanSegment = segment.trim();
+                if (cleanSegment.length < 8) return; // Skip very short segments
                 
-                // Skip empty lines and very short lines
-                if (cleanLine.length < 10) return;
+                console.log(`Processing segment ${index}:`, cleanSegment);
                 
-                // Remove common prefixes
-                cleanLine = cleanLine.replace(/^(task|question|q)\s*\d*[\:\.\s]+/i, '');
-                cleanLine = cleanLine.replace(/^\d+[\.\)\:\s]+/, '');
-                cleanLine = cleanLine.replace(/^[-\*\+]\s*/, '');
+                // Remove common prefixes and numbering
+                cleanSegment = cleanSegment.replace(/^(task|question|q)\s*\d*[\:\.\s]+/i, '');
+                cleanSegment = cleanSegment.replace(/^\d+[\.\)\s]+/, '');
+                cleanSegment = cleanSegment.replace(/^[-\*\+•]\s*/, '');
+                cleanSegment = cleanSegment.replace(/^["'`]|["'`]$/g, '');
                 
-                // Check if line matches any question pattern
-                const isQuestion = questionPatterns.some(pattern => pattern.test(cleanLine));
+                // Question detection criteria (more permissive)
+                const hasQuestionWord = /\b(what|when|where|who|why|how|which|can|could|would|should|is|are|was|were|do|does|did|will|find|identify|determine|calculate|analyze|discover|locate|extract)\b/i.test(cleanSegment);
+                const endsWithQuestion = cleanSegment.endsWith('?');
+                const looksLikeQuestion = /\b(endpoint|attack|time|version|hash|address|file|method|tool|vulnerability|exploit)\b/i.test(cleanSegment);
                 
-                if (isQuestion) {
-                    // Clean up the question further
-                    cleanLine = cleanLine.replace(/^["']|["']$/g, ''); // Remove quotes
-                    cleanLine = cleanLine.replace(/\s+/g, ' '); // Normalize whitespace
-                    
-                    // Ensure question ends with ? if it's a question
-                    if (!/\?$/.test(cleanLine) && /^(what|when|where|who|why|how|which)\b/i.test(cleanLine)) {
-                        cleanLine += '?';
+                if (hasQuestionWord || endsWithQuestion || looksLikeQuestion) {
+                    // Ensure it ends with a question mark if it looks like a question
+                    if (!endsWithQuestion && hasQuestionWord) {
+                        cleanSegment += '?';
                     }
                     
-                    questions.push(cleanLine);
+                    // Final cleanup
+                    cleanSegment = cleanSegment.replace(/\s+/g, ' ').trim();
+                    
+                    if (cleanSegment.length > 10 && !questions.includes(cleanSegment)) {
+                        questions.push(cleanSegment);
+                        console.log('Added question:', cleanSegment);
+                    }
                 }
             });
 
-            // If no questions found with patterns, try a more aggressive approach
-            if (questions.length === 0) {
-                // Look for sentences that could be questions based on structure
-                const allSentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 10);
-                
-                allSentences.forEach(sentence => {
-                    // Remove numbering and clean up
-                    let clean = sentence.replace(/^\d+[\.\)\s]+/, '').trim();
-                    
-                    // If it contains question words or looks like a question
-                    if (/\b(what|when|where|who|why|how|which|identify|find|determine|calculate|analyze)\b/i.test(clean)) {
-                        if (!clean.endsWith('?')) clean += '?';
-                        questions.push(clean);
-                    }
-                });
-            }
-
+            console.log('Final extracted questions:', questions);
             return questions;
         }
 
